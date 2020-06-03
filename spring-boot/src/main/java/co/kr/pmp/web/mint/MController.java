@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import co.kr.pmp.service.mint.MService;
 
 @Controller
+@RequestMapping("/mint")
 public class MController {
 	@Autowired
 	private MService mService;
@@ -18,7 +19,7 @@ public class MController {
 	@GetMapping("/login")
 	public String index(HttpServletRequest request) {
 		System.out.println("테스트메세지");
-		return "login";
+		return "/mint/login";
 	}
 	@RequestMapping("/test")
 	@ResponseBody

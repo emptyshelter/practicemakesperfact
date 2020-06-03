@@ -1,4 +1,4 @@
-package co.kr.pmp.HJY.controller;
+package co.kr.pmp.web.hjy;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
