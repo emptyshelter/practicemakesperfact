@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import co.kr.pmp.service.mint.MService;
 
 @Controller
+@RequestMapping("/mint")
 public class MController {
 	@Autowired
 	private MService mService;
