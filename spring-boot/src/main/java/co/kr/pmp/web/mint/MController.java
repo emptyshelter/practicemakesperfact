@@ -19,7 +19,7 @@ public class MController {
 	@GetMapping("/login")
 	public String index(HttpServletRequest request) {
 		System.out.println("테스트메세지");
-		return "login";
+		return "/mint/login";
 	}
 	@RequestMapping("/test")
 	@ResponseBody
