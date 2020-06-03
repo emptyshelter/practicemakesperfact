@@ -22,17 +22,17 @@ public class WelcomeController {
 	@RequestMapping("/welcome")
 	public String welcome(HttpSession session) {
 		
-		return "welcome";
+		return "/KSS/welcome";
 	}
 	
 	@RequestMapping("/test")
 	public String test() {
-		return "test";
+		return "/KSS/test";
 	}
 	
 	@RequestMapping("/success")
 	public String success() {
-		return "success";
+		return "/KSS/success";
 	}
 	
 	@RequestMapping("/logout")
