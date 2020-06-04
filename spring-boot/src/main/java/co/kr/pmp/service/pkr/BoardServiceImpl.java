@@ -61,8 +61,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시글 전체 조회
 	@Override
-	public List<Board> listAll() {
-		return boardDao.listAll();
+	public List<Board> listAll(int start, int end, String searchOption, String keyword) {
+		return boardDao.listAll(start, end, searchOption, keyword);
 	}
 	
 	//게시글 조회 수 증가
@@ -87,6 +87,17 @@ public class BoardServiceImpl implements BoardService{
 			//세션에 시간을 저장 : "update_time_+boardNo는 다른 변수와 중복되지 않도록 한 것"
 		}
 	}
+	
+	//게시글 레코드 갯수
+	@Override
+	public int countArticle(String searchOption, String keyword) throws Exception {
+		
+		return boardDao.countArticle(searchOption,keyword);
+	}
+
+
+
+
 
 	
 }
