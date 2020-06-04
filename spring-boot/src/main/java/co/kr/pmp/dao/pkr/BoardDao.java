@@ -19,10 +19,11 @@ public interface BoardDao {
 	public void deleteArticle(int boardNo);
 	
 	//게시글 전체 목록
-	public List<Board> listAll();
+	public List<Board> listAll(int start, int end, String searchOption, String keyword);
 	
 	//게시글 조회 수 증가
 	public void increaseViewCnt(int boardNo);
 	
-
+	//게시글 레코드 갯수 
+	public int countArticle(String searchOption, String keyword);
 }

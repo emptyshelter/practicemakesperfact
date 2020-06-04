@@ -1,6 +1,8 @@
 package co.kr.pmp.web.pkr;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,12 +26,35 @@ public class BoardController {
 	
 	//게시글 전체 조회 
 	@RequestMapping("list.do")
-	public ModelAndView list() throws Exception{
-		List<Board> list = boardService.listAll();
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("board/list");
-		mav.addObject("list",list);
-		return mav; //list.jsp로 list 전달
+	public ModelAndView list(@RequestParam(defaultValue="title") String searchOption,
+							@RequestParam(defaultValue="") String keyword,
+							@RequestParam(defaultValue="1") int curPage) throws Exception{
+		//레코드의 갯수 계산 
+		int count = boardService.countArticle(searchOption, keyword);
+		
+		//페이지 나누기 처리
+		Board board = new Board(count, curPage);
+		int start = board.getPageBegin();
+		int end = board.getPageEnd();
+		
+		List<Board> list = boardService.listAll(start, end, searchOption, keyword);
+		
+		// 데이터를 맵에 저장
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("list", list); // list
+				map.put("count", count); // 레코드의 갯수
+				map.put("searchOption", searchOption); // 검색옵션
+				map.put("keyword", keyword); // 검색키워드
+				map.put("board", board);
+				// ModelAndView - 모델과 뷰
+				ModelAndView mav = new ModelAndView();
+				/*mav.addObject("list", list); // 데이터를 저장
+				mav.addObject("count", count);
+				mav.addObject("searchOption", searchOption);
+				mav.addObject("keyword", keyword);*/
+				mav.addObject("map", map); // 맵에 저장된 데이터를 mav에 저장
+				mav.setViewName("board/list"); // 뷰를 list.jsp로 설정
+				return mav; // list.jsp로 List가 전달된다.
 	}
 	
 	//게시글 작성화면
