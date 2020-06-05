@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.pmp.mapper.member.MemberMapper">
+	<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+
+	<select id="loginCheck" resultType="String">
+		SELECT member_name AS memberName
+		FROM member
+		WHERE member_id = #{memberId} AND member_pw = #{memberPw}
+	</select>
+
+	<select id="viewMember" resultType="co.kr.pmp.domain.pkr.Member">
+		SELECT
+		member_name AS memberName,
+		member_id AS memberId,
+		member_email AS memberEmail,
+		member_regdate AS memberRegdate
+		FROM MEMBER
+		WHERE member_id = #{memberId} AND member_pw =
+		#{memberPw}
+	</select>
+	<!-- 페이징 sql -->
+	<sql id="pagingHeader">
+		SELECT * FROM (
+		SELECT ROWNUM AS rn, A.* FROM (
+	</sql>
+	<sql id="pagingFooter">
+		) A
+		) WHERE rn BETWEEN #{start} AND #{end}
+	</sql>
+
+</mapper>

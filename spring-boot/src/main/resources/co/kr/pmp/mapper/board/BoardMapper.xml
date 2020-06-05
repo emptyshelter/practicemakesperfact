@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.pmp.mapper.board.BoardMapper">
+
+	<!-- 게시글 작성 -->
+	<insert id="insert">
+	<!-- 게시글 번호를 시퀀스로 생성 -->
+		INSERT INTO Board(boardNo, title, contents, writer, show)
+		VALUES (seq_board.NEXTVAL, #{title}, #{contents}, #{writer}, 'y')
+	</insert>
+	
+
+	<!-- 전체 조회 (회원권한이 없음)-->
+	<select id="listAll" resultType="co.kr.pmp.domain.pkr.Board">
+		<!-- 02. 회원 권한이 있는 게시글 목록 쿼리-->
+		SELECT boardNo, title, contents, b.regdate, viewCnt, member_name AS memberName
+		FROM BOARD b, MEMBER m -->
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="search"></include>
+		ORDER BY boardNo desc, regdate desc 
+	</select>
+	
+	
+	<!-- 게시글 상세보기 -->
+	<select id="view" resultType="co.kr.pmp.domain.pkr.Board">
+	<!--  SELECT * FROM board -->
+	SELECT boardNo, title, contents, b.regdate, writer, viewCnt, member_name AS memberName
+	FROM BOARD b, MEMBER m
+	WHERE b.writer = m.member_id
+	AND boardNo = #{boardNo}
+	</select>
+	
+	<!-- 게시글 조회 수 증가 -->
+	<update id="increaseViewCnt">
+	UPDATE BOARD SET viewCnt = viewCnt+1
+	WHERE boardNo = #{boardNo}
+	</update>
+	
+	
+	<!-- 게시글 수정 -->
+	<update id="updateArticle">
+		UPDATE BOARD
+		SET	title = #{title},
+		contents = #{contents}
+		<!--  writer = #{writer} -->
+		WHERE boardNo = #{boardNo}
+	</update>
+
+	<!-- 게시글 삭제 -->
+	<!-- 게시물을 삭제처리하지 않고, 삭제의 유무 상태만 변경 -->
+	<update id="deleteArticle">
+		UPDATE BOARD
+		SET show = 'n'
+		WHERE boardNo = #{boardNo}
+	</update>
+	<!-- 
+	<delete id="deleteArticle">
+		DELETE FROM BOARD
+		WHERE boardNo = #{boardNo}
+	</delete>
+	 -->
+	
+	<!-- 반복되는 쿼리문의 일부를 sql태그를 이용하여 따로 뺌 -->
+	<!-- 검색 조건 sql -->
+	<sql id="search">
+		<choose>
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="searchOption == 'all'">
+				WHERE b.writer = m.member_id
+				AND	(member_name like '%'||#{keyword}||'%'
+				OR 	contents like '%'||#{keyword}||'%'
+				OR 	title like '%'||#{keyword}||'%')
+			</when>
+			<!-- 전체 검색이 아닐 경우 -->
+			<otherwise>
+				WHERE b.writer = m.member_id 
+				AND ${searchOption} like '%'||#{keyword}||'%'	
+			</otherwise>
+		</choose>
+	</sql>
+
+</mapper>
