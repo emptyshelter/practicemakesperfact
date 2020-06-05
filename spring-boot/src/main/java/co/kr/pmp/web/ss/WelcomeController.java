@@ -12,12 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/ss")
 public class WelcomeController {	
-	public String generateState()
-	{
-	    SecureRandom random = new SecureRandom();
-	    return new BigInteger(130, random).toString(32);
-	}
-
 	
 	@RequestMapping("/welcome")
 	public String welcome(HttpSession session) {
