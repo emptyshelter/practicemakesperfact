@@ -16,7 +16,7 @@
 	var naverLogin = new naver.LoginWithNaverId(
 		{
 			clientId: "s7q2KoDoKxBaTm_iIQv5",
-			callbackUrl: "http://www.localhost:8080/test",
+			callbackUrl: "http://www.localhost:9090/ss/test",
 			isPopup: false, /* 팝업을 통한 연동처리 여부 */
 			loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
 		}
