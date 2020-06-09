@@ -7,11 +7,12 @@ public class Board {
 	private int boardNo; 
 	private String title;
 	private String writer;
-	private String userName;	// 게시글 작성자의 이름(회원이름)
+	private String memberName;	// 게시글 작성자의 이름(회원이름)
 	private String contents;
 	private Date regDate;
 	private int viewCount;
 	private String show;		// 게시글 삭제 상태 유무(y, n)
+	private int recnt;			// 게시글 댓글의 수 
 	//글의 순서번호 관리(그룹, 댓글의 뎁스)
 	
 	/*************페이징처리(총 100페이지 = 10블록)************************/
@@ -180,13 +181,13 @@ public class Board {
 
 
 
-	public Board(int boardNo, String title, String writer, String userName, String contents, Date regDate,
+	public Board(int boardNo, String title, String writer, String memberName, String contents, Date regDate,
 			int viewCount, String show) {
 		super();
 		this.boardNo = boardNo;
 		this.title = title;
 		this.writer = writer;
-		this.userName = userName;
+		this.memberName = memberName;
 		this.contents = contents;
 		this.regDate = regDate;
 		this.viewCount = viewCount;
@@ -231,11 +232,11 @@ public class Board {
 	}
 
 	public String getUserName() {
-		return userName;
+		return memberName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUserName(String memberName) {
+		this.memberName = memberName;
 	}
 
 	public String getShow() {
@@ -245,7 +246,13 @@ public class Board {
 	public void setShow(String show) {
 		this.show = show;
 	}
-	
-	
+
+	public int getRecnt() {
+		return recnt;
+	}
+
+	public void setRecnt(int recnt) {
+		this.recnt = recnt;
+	}
 
 }
